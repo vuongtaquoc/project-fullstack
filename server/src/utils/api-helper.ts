@@ -1,7 +1,26 @@
+import * as passport from 'passport';
+
 import { User } from '../models/user';
 import {
   InternalError, UserAlreadyExistsError, UnthenticatedRequestError, EntityNotFoundError, EntityAlreadyExistsError,
 } from './api-error';
+
+export const passportAuthenicate = (authMethod) => {
+  return (req, res, next) => {
+    passport.authenticate(authMethod, (err, user) => {
+      if (err) {
+        if (err.code === 11000) {
+          return next(UserAlreadyExistsError());
+        }
+        return next(InternalError(err));
+      }
+      req.logIn(user, (err) => {
+        if (err) { return next(err); }
+        return next();
+      });
+    })(req, res, next);
+  };
+};
 
 export const formatResponse = (data) => { // eslint-disable-line
   return {
