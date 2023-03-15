@@ -56,5 +56,8 @@
     "postcss-loader": "^7.0.2",
     "style-loader": "^3.3.2",
     "typescript-plugin-css-modules": "^4.2.3"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

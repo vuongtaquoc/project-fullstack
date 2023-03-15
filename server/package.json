@@ -48,5 +48,8 @@
     "test": "DOTENV_CONFIG_PATH=.env.test mocha --require ts-node/register --recursive -r dotenv/config ./test/**/*.ts",
     "compile": "tsc && node built/src/server.js",
     "start": "nodemon -e ts --exec \"npm run compile\""
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
