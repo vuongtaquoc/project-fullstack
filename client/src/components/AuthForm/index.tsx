@@ -27,8 +27,19 @@ const AuthForm: FC<AuthFormProps> = ({ onLoginSuccess }: AuthFormProps) => {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    const username = form.getFieldValue('username');
+    const password = form.getFieldValue('password');
 
+    try {
+      const resp = await userService.register(username, password);
+
+      message.success('Register successful!');
+
+      onLoginSuccess(resp.data.data.user);
+    } catch (e) {
+      message.error('Register failed, please try again!');
+    }
   };
 
   return (

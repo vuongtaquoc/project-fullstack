@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import React, { useState } from 'react';
 import { Layout } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import AuthForm from '../AuthForm';
 import UserInfo from '../UserInfo';
@@ -23,6 +24,7 @@ const headerStyle: React.CSSProperties = {
 };
 
 const Header: FC = () => {
+  const navigate = useNavigate();
   const token = localStorage.getItem('jwt');
   const [ isLoggedIn, setIsLoggedIn ] = useState(!!token);
 
@@ -34,9 +36,13 @@ const Header: FC = () => {
     setIsLoggedIn(false);
   };
 
+  const handleGoToHome = () => {
+    navigate('/');
+  };
+
   return (
     <Layout.Header style={headerStyle}>
-      <div className='header-logo'>
+      <div className='header-logo' onClick={handleGoToHome}>
         <img src='logo-movie.png' className='header-logo-img' />
         <h1 className='header-logo-text'>Funny Movies</h1>
       </div>

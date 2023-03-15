@@ -2,7 +2,8 @@ import type { FC } from 'react';
 import type { MenuProps } from 'antd';
 import { useState, useEffect } from 'react';
 import { Dropdown, Avatar, Button } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 import './styles.less';
 
@@ -11,6 +12,7 @@ type UserInfoProps = {
 };
 
 const UserInfo: FC<UserInfoProps> = ({ onLogoutSuccess }: UserInfoProps) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string | null>('');
 
   const handleLogout = () => {
@@ -29,6 +31,10 @@ const UserInfo: FC<UserInfoProps> = ({ onLogoutSuccess }: UserInfoProps) => {
     },
   ];
 
+  const handleGoToShareMovie = () => {
+    navigate('/share-a-movie');
+  };
+
   useEffect(() => {
     setUsername(localStorage.getItem('username'));
   }, []);
@@ -38,7 +44,7 @@ const UserInfo: FC<UserInfoProps> = ({ onLogoutSuccess }: UserInfoProps) => {
       <div className='header-user-info-username'>
         Welcome {username}
       </div>
-      <Button className='header-user-info-space' type='primary'>Share a movie</Button>
+      <Button className='header-user-info-space' type='primary' onClick={handleGoToShareMovie}>Share a movie</Button>
       <Dropdown menu={{ items }} placement="bottomRight">
         <Avatar className='header-user-info-space' icon={<UserOutlined />} />
       </Dropdown>

@@ -28,6 +28,16 @@ export async function login(req, res, next) {
 // POST /auth/register
 export async function register(req, res, next) {
   const { username, password } = req.body;
+  const userExist = await User.findOne({
+    username,
+  }).exec();
+
+  console.log(userExist)
+
+  if (userExist) {
+    throw new RestifyErrors.UnauthorizedError('username already exists');
+  }
+
   const passwordHash = await User.hashPassword(password);
   const user = new User({
     username,

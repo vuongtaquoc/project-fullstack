@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import React from 'react';
-import { RouterProvider } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 
-import router from './routes';
+import routes from './routes';
 
 import Header from './components/Header';
 
@@ -13,7 +13,7 @@ const layoutStyle: React.CSSProperties = {
 };
 
 const contentStyle: React.CSSProperties = {
-  paddingTop: 24,
+  paddingTop: 40,
   width: 1280,
   margin: 'auto'
 };
@@ -23,7 +23,13 @@ const App: FC = () => {
     <Layout style={layoutStyle}>
       <Header />
       <Layout.Content style={contentStyle}>
-        <RouterProvider router={router} />
+        <Routes>
+          {
+            routes.map(route => (
+              <Route key={route.path} path={route.path} element={route.element} errorElement={route.errorElement} />
+            ))
+          }
+        </Routes>
       </Layout.Content>
     </Layout>
   );
