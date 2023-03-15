@@ -6,9 +6,7 @@ import { formatResponse, getUserFromReq } from '../utils/api-helper';
 // POST /auth/login
 export async function login(req, res, next) {
   const query:any = {};
-  if (req.body.mobile) {
-    query.mobile = req.body.mobile;
-  } else if (req.body.username) {
+  if (req.body.username) {
     query.username = req.body.username;
   }
 

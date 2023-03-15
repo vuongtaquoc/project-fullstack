@@ -23,7 +23,7 @@ const HomePage: FC = () => {
         onChange: (page) => {
           console.log(page);
         },
-        pageSize: 3,
+        pageSize: 20,
       }}
       dataSource={data}
       renderItem={(item) => (

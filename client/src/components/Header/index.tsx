@@ -1,8 +1,9 @@
 import type { FC } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
 
 import AuthForm from '../AuthForm';
+import UserInfo from '../UserInfo';
 
 import './styles.less';
 
@@ -22,6 +23,17 @@ const headerStyle: React.CSSProperties = {
 };
 
 const Header: FC = () => {
+  const token = localStorage.getItem('jwt');
+  const [ isLoggedIn, setIsLoggedIn ] = useState(!!token);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogoutSuccess = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <Layout.Header style={headerStyle}>
       <div className='header-logo'>
@@ -29,7 +41,8 @@ const Header: FC = () => {
         <h1 className='header-logo-text'>Funny Movies</h1>
       </div>
       <div className='header-form'>
-        <AuthForm />
+        {!isLoggedIn && <AuthForm onLoginSuccess={handleLoginSuccess} />}
+        {isLoggedIn && <UserInfo onLogoutSuccess={handleLogoutSuccess} /> }
       </div>
     </Layout.Header>
   );

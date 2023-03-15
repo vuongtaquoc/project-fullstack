@@ -2,6 +2,7 @@ import * as restify from 'restify';
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import * as passport from 'passport';
+import * as corsMiddleware from 'restify-cors-middleware';
 
 import { ERROR_SERVER_EXCEPTION } from './utils/api-error';
 
@@ -33,10 +34,17 @@ const server = restify.createServer({
   version: '1.0.0',
 });
 
+const cors = corsMiddleware({
+  origins: ['*'],
+  allowHeaders: ['Authorization'],
+  exposeHeaders: ['Authorization']
+});
 server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.bodyParser());
 server.use(passport.initialize());
+server.pre(cors.preflight);
+server.use(cors.actual);
 
 //
 if (LOGGER_LEVEL === 'debug') {
