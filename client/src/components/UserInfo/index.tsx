@@ -18,6 +18,7 @@ const UserInfo: FC<UserInfoProps> = ({ onLogoutSuccess }: UserInfoProps) => {
   const handleLogout = () => {
     localStorage.clear();
     onLogoutSuccess();
+    navigate('/');
   };
 
   const items: MenuProps['items'] = [

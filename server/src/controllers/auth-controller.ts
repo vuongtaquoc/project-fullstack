@@ -32,8 +32,6 @@ export async function register(req, res, next) {
     username,
   }).exec();
 
-  console.log(userExist)
-
   if (userExist) {
     throw new RestifyErrors.UnauthorizedError('username already exists');
   }

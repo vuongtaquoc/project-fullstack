@@ -2,26 +2,19 @@ import type { FC } from 'react';
 import { List } from 'antd';
 import { LikeOutlined, DislikeOutlined } from '@ant-design/icons';
 
+import { IMovie } from '../../../models/movie';
+import * as words from '../../../utils/words';
+
 import './styles.less';
 
-export type MovieItemProps = {
-  title: string;
-  description: string;
-  content: string;
-};
-
-const MovieItem: FC<MovieItemProps> = (item: MovieItemProps) => {
+const MovieItem: FC<IMovie> = (item: IMovie) => {
   return (
     <List.Item
-      key={item.title}
+      key={item.youtube_id}
       className='movie-item'
     >
       <div className='movie-item-video'>
-        <img
-          width={272}
-          alt="logo"
-          src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-        />
+        <iframe className='movie-item-video-iframe' width="272" src={`https://www.youtube.com/embed/${item.youtube_id}`} title={item.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
       </div>
       <div className='movie-item-main'>
         <List.Item.Meta
@@ -29,7 +22,7 @@ const MovieItem: FC<MovieItemProps> = (item: MovieItemProps) => {
           title={<a href='#'>{item.title}</a>}
         />
         <div className='movie-item-share-info'>
-          Share by: admin@gmail.com
+          Share by: {item.created_user.username}
         </div>
         <div className='movie-item-vote'>
           <span className='movie-item-vote-item'>
@@ -41,7 +34,7 @@ const MovieItem: FC<MovieItemProps> = (item: MovieItemProps) => {
         </div>
 
         <div className='movie-item-description'>
-          {item.description}
+          {words.truncate(item.description, 80)}
         </div>
       </div>
     </List.Item>

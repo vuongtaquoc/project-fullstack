@@ -8,6 +8,7 @@ function sign(user) {
 
 async function verify(token) {
   const payload = await jwt.verifyAsync(token, JWT_SECRET);
+
   return payload;
 }
 

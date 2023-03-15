@@ -41,7 +41,7 @@ export const formatPagination = (paginationData) => { // eslint-disable-line
 };
 
 export const getUserFromReq = async (req) => {
-  const { id } = req.session.passport.user;
+  const { id } = req.user;
   const user = await User.findById(id);
   if (user === null) {
     throw UnthenticatedRequestError();

@@ -1,20 +1,21 @@
 import type { FC } from 'react';
-import React from 'react';
-import { Avatar, List, Space } from 'antd';
+import { useEffect, useState } from 'react';
+import { List } from 'antd';
+
+import * as movieService from '../../services/movie';
+import { IMovie } from '../../models/movie';
 
 import MovieItem from './MovieItem';
 
-const data = Array.from({ length: 23 }).map((_, i) => ({
-  href: 'https://ant.design',
-  title: `ant design part ${i}`,
-  avatar: `https://joesch.moe/api/v1/random?key=${i}`,
-  description:
-    'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-  content:
-    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-}));
-
 const HomePage: FC = () => {
+  const [movies, setMovies] = useState<IMovie[]>([]);
+
+  useEffect(() => {
+    movieService.findAll().then(resp => {
+      setMovies(resp.data.data);
+    });
+  }, []);
+
   return (
     <List
       itemLayout="vertical"
@@ -25,7 +26,7 @@ const HomePage: FC = () => {
         },
         pageSize: 20,
       }}
-      dataSource={data}
+      dataSource={movies}
       renderItem={(item) => (
         <MovieItem {...item} />
       )}
