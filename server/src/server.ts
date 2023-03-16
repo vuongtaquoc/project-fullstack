@@ -77,8 +77,8 @@ server.on('restifyError', (req, res, err, callback) => {
   return callback();
 });
 
-// server.listen(process.env.PORT || 5000, () => {
-//   logger.info(`${server.name} listening at ${server.url}`);
-// });
+server.listen(process.env.PORT || 5000, () => {
+  logger.info(`${server.name} listening at ${server.url}`);
+});
 
 export default server;
