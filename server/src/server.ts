@@ -77,7 +77,7 @@ server.on('restifyError', (req, res, err, callback) => {
   return callback();
 });
 
-server.listen(3001, () => {
+server.listen(5000, () => {
   logger.info(`${server.name} listening at ${server.url}`);
 });
 
